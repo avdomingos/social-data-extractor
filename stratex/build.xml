@@ -1,0 +1,105 @@
+<project name="Stratex" default="dist" basedir=".">
+    <description>
+        Ant build file for Stratex
+    </description>
+
+    <!--enviroment properties-->
+    <property environment="env"/>
+
+    <!--Project base dirs-->
+    <property name="src" location="src"/>
+    <property name="build" location="build"/>
+    <property name="build-tests" location="build/tests"/>
+    <property name="dist" location="dist"/>
+
+    <!--Project source dirs-->
+    <property name="src.main" location="${src}/main"/>
+    <property name="src.test" location="${src}/test"/>
+
+    <!--Resources dir-->
+    <property name="main.lib" location="vendor/main/lib"/>
+    <property name="test.lib" location="vendor/test/lib"/>
+    <property name="main.local.resources" location="${src.main}/resources/"/>
+    <property name="main.deploy.resources" location="${src.main}/resources/"/>
+
+
+    <!--Deploy settings-->
+    <property name="main.class.path" value="main.Main"/>
+    <property name="component.name" value="component.name"/>
+    <property name="component.version" value="component.version"/>
+    <property name="component.vendor" value="component.vendor"/>
+
+    <!--Group of *.jar files used in main-->
+    <path id="main.external.lib">
+        <fileset dir="${main.lib}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+    <path id="test.external.lib">
+        <path refid="main.external.lib"/>
+        <fileset dir="${test.lib}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="init">
+        <!-- Create the time stamp -->
+        <tstamp/>
+        <!-- Create the build directory structure used by compile -->
+        <mkdir dir="${build}"/>
+        <mkdir dir="${build-tests}"/>
+    </target>
+
+
+    <target name="compile" depends="init"
+            description="compile the source ">
+        <!-- Compile the java code from ${src} into ${build} -->
+        <javac srcdir="${src.main}" destdir="${build}">
+            <classpath>
+                <path refid="main.external.lib"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="dist" depends="compile"
+            description="generate the distribution">
+        <!-- Create the distribution directory -->
+        <buildnumber/>
+
+        <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+        <jar jarfile="${dist}/${ant.project.name}.jar" basedir="${build}">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Main-Class" value="${main.class.path}"/>
+                <section name="common">
+                    <attribute name="Specification-Title" value="${component.name}"/>
+                    <attribute name="Specification-Version" value="${component.version}"/>
+                    <attribute name="Specification-Vendor" value="${component.vendor}"/>
+                    <attribute name="Implementation-Title" value="${component.name}"/>
+                    <attribute name="Implementation-Version" value="${component.version} ${TODAY}"/>
+                    <attribute name="Implementation-Vendor" value="${component.vendor}"/>
+                </section>
+
+                <!-- finally, use the magically generated libs path -->
+                <!--<attribute name="Class-Path" value="${libs.project}"/>-->
+            </manifest>
+            <zipgroupfileset dir="${main.lib}" includes="**/*.jar"/>
+        </jar>
+        <copy todir="${dist}" verbose="true">
+            <fileset id="properties.local" dir="${main.local.resources}"/>
+        </copy>
+        <copy todir="${dist}/deploy_properties" verbose="true">
+            <fileset id="properties.deploy" dir="${main.deploy.resources}"/>
+        </copy>
+
+    </target>
+
+    <target name="clean"
+            description="clean up">
+        <!-- Delete the ${build} and ${dist} directory trees -->
+        <delete dir="${build}"/>
+        <delete dir="${dist}"/>
+    </target>
+
+
+</project>
