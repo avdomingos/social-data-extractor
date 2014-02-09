@@ -19,7 +19,8 @@ https://github.com/avdomingos/social-data-extractor/wiki.
 
 Project Authors: 
 André Domingos (https://github.com/avdomingos)
-Hugo Ferreira 
+
+Hugo Ferreira (https://github.com/crackpt)
 
 Please bear in mind that the documentation is still being uploaded and some pages may be missing or incomplete.
 
