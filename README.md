@@ -17,9 +17,7 @@ Reconstructs a social network based on social interactions. The output is tipica
 For more information please visit the project's wiki page on
 https://github.com/avdomingos/social-data-extractor/wiki. 
 
-Project Authors:
-André Domingos (https://github.com/avdomingos)
-Hugo Ferreira (https://github.com/crackpt)
+Project Authors: André Domingos (https://github.com/avdomingos), Hugo Ferreira (https://github.com/crackpt)
 
 Please bear in mind that the documentation is still being uploaded and some pages may be missing or incomplete.
 
