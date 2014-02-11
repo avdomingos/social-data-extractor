@@ -37,7 +37,6 @@ public class Main {
     public static void main(String[] args){
         if (args == null || args.length == 0) {
             System.out.println("usage: stratex <commandName> {[<commandParameters>]}");
-            StratexLogger.logInfo("usage: stratex <commandName> {[<commandParameters>]}");
             return;
         }
 
@@ -79,13 +78,4 @@ public class Main {
                             + e.getInnerException().getClass().getName()
             );
     }
-
-    private static boolean validateIPAddress(String ipAddr) {
-        return true;
-    }
-
-    /*private static void LogErrorMessage(Exception e) {
-        Log4JLogger logger = new Log4JLogger();
-        logger.error(e.getMessage(), e);
-    } */
 }
