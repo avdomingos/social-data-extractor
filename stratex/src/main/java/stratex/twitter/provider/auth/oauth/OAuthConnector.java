@@ -38,23 +38,17 @@ import java.util.List;
 
 public class OAuthConnector implements IConnectorProvider<OAuthConnectorParameters> {
 
-
     public static final String ERROR_MESSAGE = "Unable to create OAuthConnector.";
 
     public HttpRequestBase getConnector(OAuthConnectorParameters connectorParameters) throws ConnectionProviderException {
-        //String base = FILTER_URL;
         HttpPost methodToReturn = null;
         try {
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            // No spaces
-//        params.add(new BasicNameValuePair("track", "will"));
-            // Spaces
             for (IParameter param : connectorParameters.getParameters()) {
                 params.add(new BasicNameValuePair(param.getParameterName(), param.getParameterValue()));
             }
 
             methodToReturn = new HttpPost(connectorParameters.getApiMethodURI().toString());
-            //logger.info("" + method.getURI());
 
             UrlEncodedFormEntity postEntity = new UrlEncodedFormEntity(params,
                     HTTP.UTF_8);
@@ -62,17 +56,17 @@ public class OAuthConnector implements IConnectorProvider<OAuthConnectorParamete
 
             CommonsHttpOAuthConsumer consumer =
                     new CommonsHttpOAuthConsumer(
-                            connectorParameters.getOAuthComsumerKey(),
-                            connectorParameters.getOAuthComsumerSectet());
+                            connectorParameters.getAPIkey(),
+                            connectorParameters.getAPISecret());
 
             consumer.setTokenWithSecret(
-                    connectorParameters.getOAuthComsumerToken(),
-                    connectorParameters.getOAuthComsumerTokenSecret());
+                    connectorParameters.getAccessToken(),
+                    connectorParameters.getAccessTokenSecret());
 
             consumer.sign(methodToReturn);
 
-        } catch (URISyntaxException ex) {
-
+        } catch (URISyntaxException e) {
+            throw new ConnectionProviderException(ERROR_MESSAGE , e);
         } catch (OAuthExpectationFailedException e) {
             throw new ConnectionProviderException(ERROR_MESSAGE , e);
         } catch (OAuthCommunicationException e) {

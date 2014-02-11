@@ -17,16 +17,25 @@
 
 package stratex.twitter.provider.auth.oauth;
 
+import stratex.properties.PropertyLoader;
 import stratex.twitter.provider.connection.ConnectorParameters;
 import stratex.twitter.provider.parameter.AbstractParameter;
 import stratex.twitter.provider.parameter.streamingAPI.StreamingAPIMethod;
 
+import java.io.IOException;
+import java.util.Properties;
+
 public class OAuthConnectorParameters extends ConnectorParameters {
 
-    private String _oAuthComsumerKey;
-    private String _oAuthComsumerSectet;
-    private String _oAuthComsumerToken;
-    private String _oAuthComsumerTokenSecret;
+    private static final String API_KEY_PROPERTY = "APIkey";
+    private static final String API_SECRET_PROPERTY = "APISecret";
+    private static final String ACCESS_TOKEN_PROPERTY = "AccessToken";
+    private static final String ACCESS_TOKEN_SECRET_PROPERTY = "AccessTokenSecret";
+
+    private String APIkey;
+    private String APISecret;
+    private String AccessToken;
+    private String AccessTokenSecret;
 
     /**
      * Constructor for ConnectorParameters
@@ -38,7 +47,6 @@ public class OAuthConnectorParameters extends ConnectorParameters {
      * @param protocol
      * @param apiMethod
      * @param apiLevel
-     * @param httpMethod
      */
     public OAuthConnectorParameters(
             String encoding,
@@ -47,29 +55,33 @@ public class OAuthConnectorParameters extends ConnectorParameters {
             String protocol,
             StreamingAPIMethod apiMethod,
             String apiLevel,
-            String httpMethod,
-            String oAuthComsumerKey,
-            String oAuthComsumerSecret,
-            String oAuthComsumerToken,
-            String oAuthComsumerTokenSecret,
-            AbstractParameter... parameters) {
+            AbstractParameter... parameters) throws IOException {
         super(encoding, port, host, protocol, apiMethod, apiLevel, parameters);
-        _oAuthComsumerKey = oAuthComsumerKey;
-        _oAuthComsumerSectet = oAuthComsumerSecret;
-        _oAuthComsumerToken = oAuthComsumerToken;
-        _oAuthComsumerTokenSecret = oAuthComsumerTokenSecret;
+
+        // Obtain keys
+        Properties oAuthProperties = PropertyLoader.getProperties("OAuth");
+
+        APIkey = oAuthProperties.getProperty(API_KEY_PROPERTY);
+        APISecret = oAuthProperties.getProperty(API_SECRET_PROPERTY);
+        AccessToken = oAuthProperties.getProperty(ACCESS_TOKEN_PROPERTY);
+        AccessTokenSecret = oAuthProperties.getProperty(ACCESS_TOKEN_SECRET_PROPERTY);
+
+
     }
 
-    public String getOAuthComsumerKey() {
-        return _oAuthComsumerKey;
+    public String getAPIkey() {
+        return APIkey;
     }
-    public String getOAuthComsumerSectet() {
-        return _oAuthComsumerSectet;
+
+    public String getAPISecret() {
+        return APISecret;
     }
-    public String getOAuthComsumerToken() {
-        return _oAuthComsumerToken;
+
+    public String getAccessToken() {
+        return AccessToken;
     }
-    public String getOAuthComsumerTokenSecret() {
-        return _oAuthComsumerTokenSecret;
+
+    public String getAccessTokenSecret() {
+        return AccessTokenSecret;
     }
 }
