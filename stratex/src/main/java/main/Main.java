@@ -17,7 +17,6 @@
 
 package main;
 
-import com.sun.deploy.uitoolkit.ui.ConsoleWindow;
 import pt.command.base.CommandResolver;
 import pt.command.exception.UnsupportedCommandException;
 import pt.command.parser.CommandLineParser;
@@ -25,7 +24,6 @@ import stratex.commands.*;
 import stratex.exceptions.StratexException;
 import stratex.log.StratexLogger;
 
-import java.io.OutputStreamWriter;
 import java.util.Map;
 
 public class Main {
