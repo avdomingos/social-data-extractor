@@ -21,22 +21,11 @@ import stratex.twitter.provider.connection.ConnectorParameters;
 import stratex.twitter.provider.parameter.AbstractParameter;
 import stratex.twitter.provider.parameter.streamingAPI.StreamingAPIMethod;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Hugo Ferreira
- * Date: 02-04-2012
- * Time: 21:59
- * To change this template use File | Settings | File Templates.
- */
 public class OAuthConnectorParameters extends ConnectorParameters {
 
-    //"vfMAFp6nZloisOKrHmwlg";
     private String _oAuthComsumerKey;
-    //"BNyItEcKAtdkiFy9xdV19zoI9MA78UIe8KMDt3myk";
     private String _oAuthComsumerSectet;
-    //"534744254-svzXTzyoU1ersTi97LHnDDqHoxHmLOQfah3IUIM3";
     private String _oAuthComsumerToken;
-    //"FGVpTQ7BiqrL3qYW6tULK4NRvAawUJdLkEH3sDZQtk";
     private String _oAuthComsumerTokenSecret;
 
     /**

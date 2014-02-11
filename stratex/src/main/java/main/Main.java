@@ -17,7 +17,7 @@
 
 package main;
 
-
+import com.sun.deploy.uitoolkit.ui.ConsoleWindow;
 import pt.command.base.CommandResolver;
 import pt.command.exception.UnsupportedCommandException;
 import pt.command.parser.CommandLineParser;
@@ -25,6 +25,7 @@ import stratex.commands.*;
 import stratex.exceptions.StratexException;
 import stratex.log.StratexLogger;
 
+import java.io.OutputStreamWriter;
 import java.util.Map;
 
 public class Main {
@@ -36,13 +37,10 @@ public class Main {
      * @throws Exception
      */
     public static void main(String[] args){
-
         if (args == null || args.length == 0) {
-            try {
-                throw new StratexException("usage: stratex <commandName> {[<commandParameters>]}");
-            } catch (StratexException e) {
-                StratexLogger.logError(e.getMessage(), e);
-            }
+            System.out.println("usage: stratex <commandName> {[<commandParameters>]}");
+            StratexLogger.logInfo("usage: stratex <commandName> {[<commandParameters>]}");
+            return;
         }
 
         try {
@@ -66,9 +64,7 @@ public class Main {
         } finally {
             StratexLogger.logInfo("Execution stopped.");
         }
-
     }
-
 
     private static void printExceptionError(StratexException e) {
         System.out.println("Error: " + e.getMessage());

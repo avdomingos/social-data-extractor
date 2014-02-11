@@ -23,7 +23,7 @@ import org.apache.log4j.PropertyConfigurator;
 import java.lang.management.ManagementFactory;
 
 /**
- * LogUtils allows you to use log4j
+ * StratexLogger allows you to use log4j
  */
 public class StratexLogger {
 
@@ -31,11 +31,13 @@ public class StratexLogger {
     private static String LOGGER_NAME = "Stratex";
     private static String PROCESS_ID = ManagementFactory.getRuntimeMXBean().getName();
     private static String logFormat = "PID: %s - LogInfo: %s";
+
+    public static final String CONFIG_FILENAME = "log4j.properties";
+
     static {
-        PropertyConfigurator.configure("log4j_stratex.properties");
+        PropertyConfigurator.configure(CONFIG_FILENAME);
         logger = Logger.getLogger(LOGGER_NAME);
     }
-
 
     /**
      * Allows you to write some info log
