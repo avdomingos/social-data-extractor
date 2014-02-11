@@ -23,7 +23,7 @@ import stratex.twitter.provider.parameter.streamingAPI.StreamingAPIMethod;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class ConnectorParameters {
+public abstract class ConnectorParameters {
     // typically "stream.twitter.com"
     private String host;
     // http or https

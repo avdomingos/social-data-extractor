@@ -23,12 +23,11 @@ import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.BasicHttpContext;
 import stratex.exceptions.StratexException;
 import stratex.log.StratexLogger;
 import stratex.twitter.extractor.datahandlers.IDataHandler;
 import stratex.twitter.extractor.datahandlers.exception.DataHandlerException;
-import stratex.twitter.provider.auth.basicauth.BasicAuthenticationConnector;
+import stratex.twitter.provider.auth.oauth.OAuthConnectorParameters;
 import stratex.twitter.provider.connection.ConnectorParameters;
 import stratex.twitter.provider.connection.IConnectorProvider;
 import stratex.twitter.provider.parameter.AbstractParameter;
@@ -100,7 +99,7 @@ public final class BaseExtractor {
      * @throws Exception
      */
     public void extract(StreamingAPIMethod method, AbstractParameter[] streamingApiParameters) throws Exception {
-        ConnectorParameters params = new ConnectorParameters(
+        ConnectorParameters params = new OAuthConnectorParameters(
                 "utf-8",
                 443,
                 "stream.twitter.com",
@@ -134,23 +133,7 @@ public final class BaseExtractor {
             httpclient.getParams().setParameter("http.route.local-address", addressToUse);
         }
 
-        // Prepares basic authentication the basic authentication connector
-        BasicHttpContext context = null;
-        if (connector.getClass() == BasicAuthenticationConnector.class) {
-            context = HttpBasicAuthenticationHelper.prepareHTTPBasicAuthentication
-                    (
-                            host,
-                            httpclient,
-                            username, //"pfc2012",
-                            password //"pfciselandrehugo2012"
-                    );
-        }
-        HttpResponse response;
-        try {
-            response = httpclient.execute(host, baseRequest, context);
-        } catch (Exception e) {
-            throw new StratexException("Error executing httpClient.", e);
-        }
+       HttpResponse response = httpclient.execute(host, baseRequest);
         try {
             if (response.getStatusLine().getStatusCode() != 200)
             {

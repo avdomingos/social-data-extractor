@@ -19,10 +19,7 @@ package twitter.connector.tests;
 
 import org.junit.Assert;
 import org.junit.Test;
-import stratex.twitter.provider.auth.basicauth.BasicAuthenticationConnector;
-import stratex.twitter.provider.auth.oauth.OAuthConnector;
 import stratex.twitter.provider.connection.ConnectorFactory;
-import stratex.twitter.provider.connection.ConnectorType;
 import stratex.twitter.provider.exception.ConnectorFactoryException;
 
 public class ConnectorFactoryTest {
@@ -31,22 +28,4 @@ public class ConnectorFactoryTest {
     public void testGetsAnyConnectorFromTheConnectorsFactory() throws ConnectorFactoryException {
         Assert.assertNotNull(ConnectorFactory.obtainDefaultConnector());
     }
-
-    @Test
-    public void testGetsABasicAuthenticationConnectorFromTheConnectorsFactory() throws ConnectorFactoryException {
-
-        Assert.assertTrue(ConnectorFactory.obtainConnector(ConnectorType.BASIC_AUTHENTICATION_CONNECTOR) instanceof BasicAuthenticationConnector);
-    }
-
-    @Test
-    public void testGetsAnOpenAuthConnectorFromTheConnectorsFactory() throws ConnectorFactoryException {
-        Assert.assertTrue(ConnectorFactory.obtainConnector(ConnectorType.OAUTH_CONNECTOR) instanceof OAuthConnector);
-    }
-
-    @Test(expected = ConnectorFactoryException.class)
-    public void testThrowsExceptionWhenNullIsPassedAsConnectorType() throws ConnectorFactoryException {
-        ConnectorFactory.obtainConnector(null);
-    }
-
-
 }
